@@ -104,7 +104,7 @@ class LdapAuthSource < AuthSource
   # @param all_attributes [Boolean] Whether to return all user attributes
   #
   # By default, it will only include the user attributes if on-the-fly registration is enabled
-  def search_attributes(all_attributes = onthefly_register?)
+  def update_service_specsearch_attributes(all_attributes = onthefly_register?)
     if all_attributes
       ['dn', attr_login, attr_firstname, attr_lastname, attr_mail, attr_admin].compact
     else
