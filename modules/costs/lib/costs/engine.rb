@@ -43,6 +43,7 @@ module Costs
                menu_item: :costs_setting
              },
              name: :project_module_costs do
+
       project_module :costs do
         permission :view_time_entries, {}
         permission :view_own_time_entries, {}

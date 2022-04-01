@@ -40,6 +40,7 @@ module OpenProject::Bim
                default: {
                }
              } do
+
       project_module(:bim,
                      dependencies: :work_package_tracking,
                      if: ->(*) { OpenProject::Configuration.bim? }) do
@@ -81,7 +82,11 @@ module OpenProject::Bim
                    dependencies: %i[manage_public_queries save_bcf_queries]
       end
 
-      OpenProject::AccessControl.permission(:view_work_packages).controller_actions << 'bim/bcf/issues/redirect_to_bcf_issues_list'
+      Rails.application.reloader.to_prepare do
+        OpenProject::AccessControl
+          .permission(:view_work_packages)
+          .controller_actions << 'bim/bcf/issues/redirect_to_bcf_issues_list'
+      end
 
       ::Redmine::MenuManager.map(:project_menu) do |menu|
         menu.push(:ifc_models,
