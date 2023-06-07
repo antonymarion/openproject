@@ -17,3 +17,4 @@ jobs:
           upstream_repo: https://github.com/opf/openproject # opf
           upstream_branch: dev
           downstream_branch: compare
+          token: ${{ secrets.PAT_TOKEN }}
