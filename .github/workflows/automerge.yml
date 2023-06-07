@@ -1,0 +1,21 @@
+name: Update dev/compare
+
+on:
+  push:
+    branches:
+      - compare
+
+jobs:
+  update-dev-compare:
+    name: Merge compare into dev on branch compare has new commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: merge
+        uses: mtanzi/action-automerge@v1
+        id: merge
+        with:
+          github_token: ${{ github.token }}
+          source: 'compare'
+          target: 'dev'
