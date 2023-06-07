@@ -1,9 +1,10 @@
 name: Update dev/compare
 
 on:
-  push:
-    branches:
-      - compare
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '* * * * *'
+
 
 jobs:
   update-dev-compare:
