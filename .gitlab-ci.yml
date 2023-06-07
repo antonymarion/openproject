@@ -1,0 +1,22 @@
+stages:
+  - diffMergeWithOngoingDev
+
+diff-merge-job:
+  stage: diffMergeWithOngoingDev
+  allow_failure: true
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$GIT_SSH_PRIV_KEY")
+    - git config --global user.email "marionantony@gmail.com"
+    - git config --global user.name "Mr. MARION"
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts
+  script:
+    - git clone git@gitlab.com:antonymarion/openprojectV2.git
+    - cd ${CI_PROJECT_NAME}
+    - echo "Merging the code..."
+    - git checkout dev
+    - git merge origin/merged
+    - echo "Listing the conflicts..."
+    - git diff --name-only --diff-filter=U --relative
