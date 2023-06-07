@@ -1,9 +1,9 @@
 name: Sync Upstream
 
-# This runs every day on 1801 UTC
+# This runs every hour a min 1
 on:
   schedule:
-    - cron: '46 13 * * *'
+    - cron: '1 * * * *'
   # Allows manual workflow run (must in default branch to work)
   workflow_dispatch:
 
