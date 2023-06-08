@@ -2,7 +2,7 @@ name: GitlabSync
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/40 * * * *'
 
 jobs:
   sync:
