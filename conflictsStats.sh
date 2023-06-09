@@ -13,8 +13,6 @@ for mergeId in $mergeIds; do
 
     conflictCount=$((conflictCount + 1))
     totalFileCount=$((totalFileCount + fileCount))
-  else
-    echo "Conflict: No"
   fi
 done
 percentage=$(bc -l <<< "$conflictCount * 100 / $mergeCount")
