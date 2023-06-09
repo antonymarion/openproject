@@ -17,6 +17,6 @@ diff-merge-job:
     - cd ${CI_PROJECT_NAME}
     - echo "Merging the code..."
     - git checkout dev
-    - git merge origin/merged
+    - git merge origin/merged --no-ff --no-commit
     - echo "Listing the conflicts..."
     - git diff --name-only --diff-filter=U --relative
