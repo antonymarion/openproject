@@ -1,10 +1,8 @@
 name: GitlabSync
 
 on:
-  workflow_run:
-    workflows: [Update dev/compare]
-    types:
-      - completed
+  - push
+  - delete
 
 jobs:
   sync:
