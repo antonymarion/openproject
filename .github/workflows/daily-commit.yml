@@ -30,7 +30,7 @@ jobs:
         # stop the build if there are Python syntax errors or undefined names
         python main.py
     - name: push changes
-      uses: ad-m/github-push-action@v2
+      uses: ad-m/github-push-action@v0.6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: main  
