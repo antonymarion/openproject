@@ -40,8 +40,8 @@ def commit_repository(yaml_data):
     repo.index.add([FILE_TO_COMMIT_NAME])
     commit_message = f'Updated {yaml_data["UPDATE_TIMES"]} times. Last update was on {yaml_data["LAST_UPDATE"]}.'
     repo.index.commit(commit_message)
-    origin = repo.remote('origin')
-    origin.push()
+    # origin = repo.remote('origin')
+    # origin.push()
 
 
 if __name__ == '__main__':
