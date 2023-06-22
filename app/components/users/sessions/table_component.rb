@@ -28,16 +28,24 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-module Settings
-  ##
-  # A language switch and text area for updating a localized text setting.
-  class TextSettingComponent < ::ApplicationComponent
-    include OpenProject::FormTagHelper
+module Users
+  module Sessions
+    class TableComponent < ::TableComponent
+      columns :is_current, :name, :updated_at
+      sortable_columns :updated_at
+      options :current_session
 
-    options :name # name of setting and tag to differentiate between different language selects
+      def initial_sort
+        %i[updated_at desc]
+      end
 
-    def current_language
-      model
+      def headers
+        [
+          [:is_current, { caption: I18n.t('users.sessions.current') }],
+          [:name, { caption: I18n.t(:label_name) }],
+          [:updated_at, { caption: I18n.t('attributes.updated_at') }]
+        ]
+      end
     end
   end
 end
