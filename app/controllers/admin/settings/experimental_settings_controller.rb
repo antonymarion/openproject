@@ -26,30 +26,12 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-require 'support/pages/work_packages/abstract_work_package'
+module Admin::Settings
+  class ExperimentalSettingsController < ::Admin::SettingsController
+    menu_item :settings
 
-module Pages
-  class FullWorkPackage < Pages::AbstractWorkPackage
-    def ensure_loaded
-      find('.work-packages--details--subject', match: :first)
-    end
-
-    private
-
-    def container
-      find('.work-packages--show-view')
-    end
-
-    def path(tab = 'activity')
-      if project
-        project_work_package_path(project, work_package.id, tab)
-      else
-        work_package_path(work_package.id, tab)
-      end
-    end
-
-    def create_page(args)
-      Pages::FullWorkPackageCreate.new(**args)
+    def default_breadcrumb
+      t(:label_experimental)
     end
   end
 end
