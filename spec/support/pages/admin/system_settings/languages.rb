@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- copyright
 # OpenProject is an open source project management software.
 # Copyright (C) 2012-2023 the OpenProject GmbH
@@ -26,26 +28,17 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-module API
-  module V3
-    module Utilities
-      module Endpoints
-        class DelayedModify < API::Utilities::Endpoints::Modify
-          include V3Deductions
-          include ::API::V3::Utilities::PathHelper
+require 'support/pages/admin/system_settings/page'
 
-          private
+module Pages::Admin::SystemSettings
+  class Languages < Page
+    def path
+      admin_settings_languages_path
+    end
 
-          def present_success(request, call)
-            redirect_to_status(request, call.result)
-          end
-
-          def redirect_to_status(request, job)
-            request.redirect api_v3_paths.job_status(job.job_id)
-            request.content_type 'application/json'
-          end
-        end
-      end
+    def save
+      press_save_button
+      expect_and_dismiss_toaster
     end
   end
 end

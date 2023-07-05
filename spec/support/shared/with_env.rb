@@ -26,26 +26,36 @@
 # See COPYRIGHT and LICENSE files for more details.
 #++
 
-module API
-  module V3
-    module Utilities
-      module Endpoints
-        class DelayedModify < API::Utilities::Endpoints::Modify
-          include V3Deductions
-          include ::API::V3::Utilities::PathHelper
+# Aggregates example and parent metadata for a given key.
+def aggregate_metadata(example, metadata_key)
+  hash = example.metadata[metadata_key] || {}
+  example.example_group.module_parents.each do |parent|
+    if parent.respond_to?(:metadata) && parent.metadata[metadata_key]
+      hash.reverse_merge!(parent.metadata[metadata_key])
+    end
+  end
+  hash
+end
 
-          private
+module WithEnvMixin
+  module_function
 
-          def present_success(request, call)
-            redirect_to_status(request, call.result)
-          end
+  def with_env(environment_overrides, &)
+    ClimateControl.modify(environment_overrides, &)
+  end
+end
 
-          def redirect_to_status(request, job)
-            request.redirect api_v3_paths.job_status(job.job_id)
-            request.content_type 'application/json'
-          end
-        end
+RSpec.configure do |config|
+  config.include WithEnvMixin
+
+  config.around do |example|
+    environment_overrides = aggregate_metadata(example, :with_env)
+    if environment_overrides.present?
+      with_env(environment_overrides) do
+        example.run
       end
+    else
+      example.run
     end
   end
 end
